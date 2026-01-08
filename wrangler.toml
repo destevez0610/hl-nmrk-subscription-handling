@@ -2,9 +2,9 @@ name = "hl-nmrk-subscription-handling"
 type = "javascript"
 compatibility_date = "2026-01-08"
 
+# No build needed, Worker is plain JS
 [build]
-command = ""  # no build needed, handled by echo "skip"
+command = ""  
 
-[site]
-bucket = "."        # optional, can leave
-entry-point = "."   # optional, can leave
+[env.production]
+# Optional, can leave empty for now
