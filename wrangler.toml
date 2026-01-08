@@ -1,1 +1,10 @@
+name = "hl-nmrk-subscription-handling"
+type = "javascript"
+compatibility_date = "2026-01-08"
 
+[build]
+command = ""  # No build needed, your files are static
+
+[site]
+bucket = "."        # Root of repo where index.html lives
+entry-point = "."   # Root folder
