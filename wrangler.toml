@@ -1,0 +1,8 @@
+name = "hl-nmrk-subscription-handling"
+type = "javascript"
+compatibility_date = "2026-01-08"
+
+main = "worker.js"  # <- entry point
+
+[build]
+command = ""
