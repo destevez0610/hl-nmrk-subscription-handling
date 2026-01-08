@@ -5,7 +5,7 @@ addEventListener('fetch', event => {
 async function handleRequest(request) {
   const url = new URL(request.url)
 
-  // Show name prompt if missing
+  // Prompt for name
   if (!url.searchParams.get('name')) {
     return new Response(
       `<html>
@@ -21,19 +21,20 @@ async function handleRequest(request) {
     )
   }
 
-  // Serve static files from your GitHub Pages folder
-  const assetPath = url.pathname === '/' ? '/index.html' : url.pathname
-  const staticURL = `https://raw.githubusercontent.com/destevez0610/hl-nmrk-subscription-handling/main${assetPath}`
+  // Serve static files from GitHub
+  const path = url.pathname === '/' ? '/index.html' : url.pathname
+  const staticURL = `https://raw.githubusercontent.com/destevez0610/hl-nmrk-subscription-handling/main${path}`
 
   try {
     const res = await fetch(staticURL)
     if (!res.ok) throw new Error('Not Found')
-    // Set content-type for common files
-    const contentType = assetPath.endsWith('.css')
-      ? 'text/css'
-      : assetPath.endsWith('.js')
-      ? 'application/javascript'
-      : 'text/html'
+
+    const ext = path.split('.').pop()
+    const contentType =
+      ext === 'css' ? 'text/css' :
+      ext === 'js' ? 'application/javascript' :
+      'text/html'
+
     return new Response(await res.text(), { headers: { 'Content-Type': contentType } })
   } catch (err) {
     return new Response('Not Found', { status: 404 })
