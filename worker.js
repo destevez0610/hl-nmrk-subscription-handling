@@ -5,7 +5,7 @@ addEventListener('fetch', event => {
 async function handleRequest(request) {
   const url = new URL(request.url)
 
-  // Prompt for name if not provided
+  // 1️⃣ Prompt for name if not provided
   if (!url.searchParams.get('name')) {
     return new Response(
       `<html>
@@ -21,7 +21,7 @@ async function handleRequest(request) {
     )
   }
 
-  // Serve static files from GitHub
+  // 2️⃣ Serve files from GitHub
   let path = url.pathname
   if (path === '/') path = '/index.html'
 
@@ -32,13 +32,17 @@ async function handleRequest(request) {
     const res = await fetch(fileURL)
     if (!res.ok) throw new Error('Not Found')
 
+    // 3️⃣ Serve proper content-type
     const ext = path.split('.').pop()
     let contentType = 'text/html'
     if (ext === 'css') contentType = 'text/css'
     else if (ext === 'js') contentType = 'application/javascript'
     else if (ext === 'json') contentType = 'application/json'
+    else if (ext === 'svg') contentType = 'image/svg+xml'
 
-    return new Response(await res.text(), { headers: { 'Content-Type': contentType } })
+    return new Response(await res.text(), {
+      headers: { 'Content-Type': contentType },
+    })
   } catch (err) {
     return new Response('Not Found', { status: 404 })
   }
