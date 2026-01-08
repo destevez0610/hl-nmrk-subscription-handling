@@ -2,12 +2,9 @@ name = "hl-nmrk-subscription-handling"
 type = "javascript"
 compatibility_date = "2026-01-08"
 
-# No build needed, Worker serves static files from GitHub
 [build]
-command = ""  
+command = ""  # no build needed, handled by echo "skip"
 
-# Site configuration is optional here since Worker is fetching from GitHub
-# We can leave it or remove it; leaving it for clarity
 [site]
-bucket = "."        # Repo root (not actually used by this Worker)
-entry-point = "."   # Root folder
+bucket = "."        # optional, can leave
+entry-point = "."   # optional, can leave
