@@ -2,9 +2,7 @@ name = "hl-nmrk-subscription-handling"
 type = "javascript"
 compatibility_date = "2026-01-08"
 
-main = "worker.js"  # THIS IS THE ENTRY POINT
+main = "worker.js"  # <- entry point
 
 [build]
-command = ""  # no build
-
-# You can leave [site] out because Worker is fetching from GitHub
+command = ""
