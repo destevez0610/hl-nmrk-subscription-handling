@@ -5,7 +5,7 @@ addEventListener('fetch', event => {
 async function handleRequest(request) {
   const url = new URL(request.url)
 
-  // 1️⃣ Prompt for name if not provided
+  // Prompt for name if not provided
   if (!url.searchParams.get('name')) {
     return new Response(
       `<html>
@@ -21,11 +21,10 @@ async function handleRequest(request) {
     )
   }
 
-  // 2️⃣ Determine path
+  // Serve static files from GitHub
   let path = url.pathname
   if (path === '/') path = '/index.html'
 
-  // 3️⃣ GitHub raw URL
   const repoBase = 'https://raw.githubusercontent.com/destevez0610/hl-nmrk-subscription-handling/main'
   const fileURL = `${repoBase}${path}`
 
@@ -33,7 +32,6 @@ async function handleRequest(request) {
     const res = await fetch(fileURL)
     if (!res.ok) throw new Error('Not Found')
 
-    // 4️⃣ Set Content-Type based on file extension
     const ext = path.split('.').pop()
     let contentType = 'text/html'
     if (ext === 'css') contentType = 'text/css'
