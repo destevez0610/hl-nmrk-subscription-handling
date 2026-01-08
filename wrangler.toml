@@ -2,9 +2,12 @@ name = "hl-nmrk-subscription-handling"
 type = "javascript"
 compatibility_date = "2026-01-08"
 
+# No build needed, Worker serves static files from GitHub
 [build]
-command = ""  # No build needed, your files are static
+command = ""  
 
+# Site configuration is optional here since Worker is fetching from GitHub
+# We can leave it or remove it; leaving it for clarity
 [site]
-bucket = "."        # Root of repo where index.html lives
+bucket = "."        # Repo root (not actually used by this Worker)
 entry-point = "."   # Root folder
