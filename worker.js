@@ -5,7 +5,7 @@ addEventListener('fetch', event => {
 async function handleRequest(request) {
   const url = new URL(request.url)
 
-  // Prompt for name
+  // 1️⃣ Prompt for name if not provided
   if (!url.searchParams.get('name')) {
     return new Response(
       `<html>
@@ -21,19 +21,24 @@ async function handleRequest(request) {
     )
   }
 
-  // Serve static files from GitHub
-  const path = url.pathname === '/' ? '/index.html' : url.pathname
-  const staticURL = `https://raw.githubusercontent.com/destevez0610/hl-nmrk-subscription-handling/main${path}`
+  // 2️⃣ Determine path
+  let path = url.pathname
+  if (path === '/') path = '/index.html'
+
+  // 3️⃣ GitHub raw URL
+  const repoBase = 'https://raw.githubusercontent.com/destevez0610/hl-nmrk-subscription-handling/main'
+  const fileURL = `${repoBase}${path}`
 
   try {
-    const res = await fetch(staticURL)
+    const res = await fetch(fileURL)
     if (!res.ok) throw new Error('Not Found')
 
+    // 4️⃣ Set Content-Type based on file extension
     const ext = path.split('.').pop()
-    const contentType =
-      ext === 'css' ? 'text/css' :
-      ext === 'js' ? 'application/javascript' :
-      'text/html'
+    let contentType = 'text/html'
+    if (ext === 'css') contentType = 'text/css'
+    else if (ext === 'js') contentType = 'application/javascript'
+    else if (ext === 'json') contentType = 'application/json'
 
     return new Response(await res.text(), { headers: { 'Content-Type': contentType } })
   } catch (err) {
